@@ -17,7 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class GameActivity extends AppCompatActivity {
-    private PlayerAdapter mPlayerAdapter;
+    private PlayerGridAdapter mPlayerGridAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +25,8 @@ public class GameActivity extends AppCompatActivity {
 
         GridView gridview = (GridView) findViewById(R.id.players);
 
-        mPlayerAdapter = new PlayerAdapter(this);
-        gridview.setAdapter(mPlayerAdapter);
+        mPlayerGridAdapter = new PlayerGridAdapter(this);
+        gridview.setAdapter(mPlayerGridAdapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -36,11 +36,11 @@ public class GameActivity extends AppCompatActivity {
             }
         });
     }
-    public class PlayerAdapter extends BaseAdapter {
+    public class PlayerGridAdapter extends BaseAdapter {
         private ArrayList<Player> mPlayers;
         private Context mContext;
 
-        public PlayerAdapter(Context c) {
+        public PlayerGridAdapter(Context c) {
             mPlayers = new ArrayList<>();
             mContext = c;
 
@@ -80,7 +80,7 @@ public class GameActivity extends AppCompatActivity {
             monica.addDefenderOfCatan();
             monica.addDefenderOfCatan();
             monica.addDefenderOfCatan();
-            mPlayers.add(monica);
+            //mPlayers.add(monica);
         }
 
         @Override

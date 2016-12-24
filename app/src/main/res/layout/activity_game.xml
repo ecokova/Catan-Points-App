@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_game"
     android:layout_width="match_parent"
@@ -13,10 +14,55 @@
 
     <GridView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_above="@+id/action_buttons"
         android:id="@+id/players"
         android:numColumns="2" />
+
+    <LinearLayout
+        android:id="@+id/action_buttons"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="25dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/merchant"
+            android:id="@+id/merchant_action" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:clickable="true"
+            app:srcCompat="@mipmap/ic_longest_road"
+            android:id="@+id/longest_road_action" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:clickable="true"
+            app:srcCompat="@mipmap/ic_blue_metropolis"
+            android:id="@+id/ic_blue_metropolis_action" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:clickable="true"
+            app:srcCompat="@mipmap/ic_yellow_metropolis"
+            android:id="@+id/ic_yellow_metropolis_action" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:clickable="true"
+            app:srcCompat="@mipmap/ic_green_metropolis"
+            android:id="@+id/ic_green_metropolis_action" />
+    </LinearLayout>
+
+
+
+
 </RelativeLayout>
