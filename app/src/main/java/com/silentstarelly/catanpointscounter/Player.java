@@ -7,6 +7,9 @@ import java.util.ArrayList;
  */
 
 public class Player {
+    enum Color {
+      BLUE, RED, ORANGE, WHITE, NONE
+    };
     enum Metropolis {
         BLUE, GREEN, YELLOW
     };
@@ -21,12 +24,13 @@ public class Player {
     int numProgressCardPoints;
     int numTimesDefender;
 
+    Color color;
 
     public Player() {
-        this("");
+        this("", Color.NONE);
     }
 
-    public Player(String playerName) {
+    public Player(String playerName, Color c) {
         name = playerName;
 
         merchant = false;
@@ -37,8 +41,20 @@ public class Player {
         numCities = 1;
         numProgressCardPoints = 0;
         numTimesDefender = 0;
+
+        color = c;
     }
 
+    public Player(String playerName) {
+        this(playerName, Color.NONE);
+    }
+
+    public void setColor(Color c) {
+        color = c;
+    }
+    public Color getColor() {
+        return color;
+    }
     public void buildCity() {
         if (numSettlements < 1) {
             throw new RuntimeException(name + " does not have any settlements to upgrade.");

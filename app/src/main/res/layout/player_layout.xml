@@ -1,29 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
         android:text="TextView"
-        android:layout_width="match_parent"
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/name"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:textAlignment="center"
         android:textStyle="normal|bold"
-        android:textSize="20sp" />
+        android:textSize="30sp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:gravity="center_horizontal"
+        android:id="@+id/icons_list"
+        android:layout_below="@+id/name">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="25dp"
+            app:srcCompat="@drawable/merchant"
+            android:id="@+id/merchant_icon"
+            android:visibility="gone"
+            />
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:srcCompat="@mipmap/ic_longest_road"
+            android:id="@+id/longest_road_icon"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:srcCompat="@mipmap/ic_blue_metropolis"
+            android:id="@+id/metropolis_icon1"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:srcCompat="@mipmap/ic_blue_metropolis"
+            android:id="@+id/metropolis_icon2"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:srcCompat="@mipmap/ic_blue_metropolis"
+            android:id="@+id/metropolis_icon3"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
 
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_below="@+id/name"
-
+        android:layout_below="@+id/icons_list"
         android:layout_centerHorizontal="true"
         android:id="@+id/score"
-        android:textSize="25sp"
+        android:textSize="50sp"
         android:textStyle="normal|bold"
         android:textAlignment="center" />
+
+    <View
+        android:layout_below="@+id/score"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="25dp"
+        android:background="@android:color/darker_gray"/>
+
+
 </RelativeLayout>
