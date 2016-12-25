@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Catan Points Wench</string>
     <string name="action_settings">Settings</string>
+    <string-array name="colors_array">
+        <item>None</item>
+        <item>Blue</item>
+        <item>White</item>
+        <item>Red</item>
+        <item>Orange</item>
+        <item>Green</item>
+        <item>Brown</item>
+    </string-array>
 </resources>
+
+

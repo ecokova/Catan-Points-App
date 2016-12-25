@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Player {
     enum Color {
-      BLUE, RED, ORANGE, WHITE, NONE
+      BLUE, RED, ORANGE, WHITE, GREEN, BROWN, NONE
     };
     enum Metropolis {
         BLUE, GREEN, YELLOW, NONE
@@ -20,6 +20,8 @@ public class Player {
     boolean merchant;
     ArrayList<Metropolis> metropolises;
     boolean longestRoad;
+
+    boolean largestArmy; // TODO: Need to add support / stealing for this
 
     int numSettlements;
     int numCities;
@@ -36,11 +38,11 @@ public class Player {
         name = playerName;
 
         merchant = false;
-        metropolises = new ArrayList<Metropolis>();
+        metropolises = new ArrayList<>();
         longestRoad = false;
 
         numSettlements = 1;
-        numCities = 1;
+        numCities = 0;
         numProgressCardPoints = 0;
         numTimesDefender = 0;
 
@@ -127,6 +129,9 @@ public class Player {
                 (2 * metropolises.size()) + (merchant? 1 : 0) + (longestRoad ? 2 : 0);
     }
 
+    public void setName(String n) {
+        name = n;
+    }
     public String getName() {
         return name;
     }

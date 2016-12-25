@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mGamesAdapter.notifyDataSetChanged();
 
                     // TODO: Should go to "create new game" activity instead
-                    Intent intent = new Intent(this, GameActivity.class);
+                    Intent intent = new Intent(this, GameCreateActivity.class);
                     startActivity(intent);
 
                 }

@@ -30,7 +30,7 @@
             app:fabSize="mini"
             app:srcCompat="@mipmap/ic_add"
             android:id="@+id/add_game_button"
-            app:backgroundTint="@android:color/holo_green_dark" />
+            app:backgroundTint="@color/colorAccent" />
 
 
 </RelativeLayout>

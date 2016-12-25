@@ -62,6 +62,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mPlayers = new ArrayList<>();
 
         Player elena = new Player("Elena", Player.Color.WHITE);
+        elena.buildCity();
         /*elena.buildCity();
         elena.takeMetropolis(Player.Metropolis.BLUE);
         elena.takeMerchant();*/
@@ -69,6 +70,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
         Player catherine = new Player("Catherine", Player.Color.RED);
+        catherine.buildCity();
         /*catherine.takeMetropolis(Player.Metropolis.YELLOW);
         catherine.takeMetropolis(Player.Metropolis.GREEN);
         catherine.takeMetropolis(Player.Metropolis.BLUE);
@@ -81,9 +83,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         mPlayers.add(catherine);
 
         Player jeff = new Player("Jeff", Player.Color.ORANGE);
+        jeff.buildCity();
         mPlayers.add(jeff);
 
         Player monica = new Player("Monica", Player.Color.BLUE);
+        monica.buildCity();
         /*monica.takeLongestRoad();
         monica.takeMerchant();
         monica.buildSettlement();
@@ -115,17 +119,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void transferMetropolis(Player.Metropolis metropolis, int playerId) {
-        for (Player p : mPlayers) {
+        mPlayers.get(playerId).takeMetropolis(metropolis);
+        for (int i = 0; i < mPlayers.size(); i++) {
+            Player p = mPlayers.get(i);
             ArrayList<Player.Metropolis> metropolises = p.getMetropolises();
             for (Player.Metropolis m : metropolises) {
-                if (m == metropolis) {
+                if (m == metropolis && i != playerId) {
                     p.loseMetropolis(m);
                     break;
                 }
             }
         }
-        mPlayers.get(playerId).takeMetropolis(metropolis);
-
     }
     private void transferMerchant(int playerId) {
         for (Player p : mPlayers) {
@@ -264,6 +268,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 case WHITE:
                     name.setTextColor(Color.WHITE);
                     name.setShadowLayer(2,1,1,Color.BLACK);
+                    break;
+                case BROWN:
+                    name.setTextColor(Color.parseColor("#633905"));
+                    break;
+                case GREEN:
+                    name.setTextColor(Color.GREEN);
                     break;
                 case ORANGE:
                     name.setTextColor(Color.parseColor("#ff9000"));
