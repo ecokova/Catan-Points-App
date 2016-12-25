@@ -1,5 +1,7 @@
 package com.silentstarelly.catanpointscounter;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -11,7 +13,7 @@ public class Player {
       BLUE, RED, ORANGE, WHITE, NONE
     };
     enum Metropolis {
-        BLUE, GREEN, YELLOW
+        BLUE, GREEN, YELLOW, NONE
     };
 
     String name;
@@ -57,18 +59,18 @@ public class Player {
     }
     public void buildCity() {
         if (numSettlements < 1) {
-            throw new RuntimeException(name + " does not have any settlements to upgrade.");
+            throw new CatanRuleViolation(name + " does not have any settlements to upgrade.");
         }
         // TODO: Check max number of cities
         if (numCities >= 6) {
-            throw new RuntimeException(name + " has already build all of their cities.");
+            throw new CatanRuleViolation(name + " has already build all of their cities.");
         }
         numSettlements--;
         numCities++;
     }
     public void burnCity() {
         if (numCities < 1) {
-            throw new RuntimeException(name + " does not have a city to burn.");
+            throw new CatanRuleViolation(name + " does not have a city to burn.");
         }
         numCities--;
         numSettlements++;
@@ -76,19 +78,22 @@ public class Player {
     public void buildSettlement() {
         // TODO: Check how many settlements you actually have
         if (numSettlements >= 6) {
-            throw new RuntimeException(name + " has already built all their settlements.");
+            throw new CatanRuleViolation(name + " has already built all their settlements.");
         }
         numSettlements++;
     }
     public void takeMetropolis(Metropolis metropolisWon) {
+        Log.d("Catan", "  Player " + name + " is taking metropolis");
         if (numCities < 1) {
-            throw new RuntimeException(name + " does not have a city to put a metropolis on.");
+            throw new CatanRuleViolation(name + " does not have a city to put a metropolis on.");
         }
-        metropolises.add(metropolisWon);
+        if (metropolisWon != Metropolis.NONE) {
+            metropolises.add(metropolisWon);
+        }
     }
     public void loseMetropolis(Metropolis metropolisLost) {
         if (!metropolises.contains(metropolisLost)) {
-            throw new RuntimeException(name + " does not have that metropolis.");
+            throw new CatanRuleViolation(name + " does not have that metropolis.");
         }
         metropolises.remove(metropolisLost);
     }
@@ -103,7 +108,7 @@ public class Player {
     }
     public void loseLongestRoad() {
         if (!longestRoad) {
-            throw new RuntimeException(name + " did not have longest road to begin with.");
+            throw new CatanRuleViolation(name + " did not have longest road to begin with.");
         }
         longestRoad = false;
     }
@@ -112,7 +117,7 @@ public class Player {
     }
     public void loseMerchant() {
         if (!merchant) {
-            throw new RuntimeException(name + " did not have the merchant to begin with.");
+            throw new CatanRuleViolation(name + " did not have the merchant to begin with.");
         }
         merchant = false;
     }
@@ -150,3 +155,4 @@ public class Player {
         return numTimesDefender;
     }
 }
+
