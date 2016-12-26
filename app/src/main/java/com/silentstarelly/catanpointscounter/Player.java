@@ -2,13 +2,14 @@ package com.silentstarelly.catanpointscounter;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by elena on 12/23/2016.
  */
 
-public class Player {
+public class Player implements Serializable {
     enum Color {
       BLUE, RED, ORANGE, WHITE, GREEN, BROWN, NONE
     };
@@ -41,7 +42,7 @@ public class Player {
         metropolises = new ArrayList<>();
         longestRoad = false;
 
-        numSettlements = 1;
+        numSettlements = 0;
         numCities = 0;
         numProgressCardPoints = 0;
         numTimesDefender = 0;
@@ -63,8 +64,7 @@ public class Player {
         if (numSettlements < 1) {
             throw new CatanRuleViolation(name + " does not have any settlements to upgrade.");
         }
-        // TODO: Check max number of cities
-        if (numCities >= 6) {
+        if (numCities >= 4) {
             throw new CatanRuleViolation(name + " has already build all of their cities.");
         }
         numSettlements--;
@@ -74,19 +74,20 @@ public class Player {
         if (numCities < 1) {
             throw new CatanRuleViolation(name + " does not have a city to burn.");
         }
+        if (metropolises.size() == numCities) {
+            throw new CatanRuleViolation(name + " cannot burn, as all cities have a metropolis.");
+        }
         numCities--;
         numSettlements++;
     }
     public void buildSettlement() {
-        // TODO: Check how many settlements you actually have
-        if (numSettlements >= 6) {
+        if (numSettlements >= 5) {
             throw new CatanRuleViolation(name + " has already built all their settlements.");
         }
         numSettlements++;
     }
     public void takeMetropolis(Metropolis metropolisWon) {
-        Log.d("Catan", "  Player " + name + " is taking metropolis");
-        if (numCities < 1) {
+        if (numCities <= metropolises.size()) {
             throw new CatanRuleViolation(name + " does not have a city to put a metropolis on.");
         }
         if (metropolisWon != Metropolis.NONE) {

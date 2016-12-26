@@ -1,6 +1,7 @@
 package com.silentstarelly.catanpointscounter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,6 +43,9 @@ public class GameCreateActivity extends AppCompatActivity implements View.OnClic
 
         Button addPlayerButton = (Button) findViewById(R.id.add_player_button);
         addPlayerButton.setOnClickListener(this);
+
+        Button beginGameButton = (Button) findViewById(R.id.begin_game_button);
+        beginGameButton.setOnClickListener(this);
     }
 
     @Override
@@ -51,6 +55,10 @@ public class GameCreateActivity extends AppCompatActivity implements View.OnClic
                 mPlayers.add(new Player());
                 mPlayerListAdapter.notifyDataSetChanged();
                 break;
+            case R.id.begin_game_button:
+                Intent intent = new Intent(this, GameActivity.class);
+                intent.putExtra("players", mPlayers);
+                startActivity(intent);
         }
     }
 

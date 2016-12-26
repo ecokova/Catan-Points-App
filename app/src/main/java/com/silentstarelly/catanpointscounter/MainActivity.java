@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mPreviousGames.add("Game " + mI);
                     mGamesAdapter.notifyDataSetChanged();
 
-                    // TODO: Should go to "create new game" activity instead
                     Intent intent = new Intent(this, GameCreateActivity.class);
                     startActivity(intent);
 

@@ -1,6 +1,7 @@
 package com.silentstarelly.catanpointscounter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +35,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        initializeDummyPlayers();
+        Bundle extras = getIntent().getExtras();
+        mPlayers = (ArrayList<Player>) extras.get("players");
+
+        //initializeDummyPlayers();
 
         mGridView = (GridView) findViewById(R.id.players);
 
@@ -258,22 +262,23 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         private View fillPlayerView(View playerView, Player player) {
             TextView name = (TextView) playerView.findViewById(R.id.name);
             name.setText(player.getName());
+            //TODO: Move colors into values file
             switch (player.getColor()) {
                 case BLUE:
-                    name.setTextColor(Color.BLUE);
+                    name.setTextColor(Color.parseColor("#2196F3"));
                     break;
                 case RED:
-                    name.setTextColor(Color.RED);
+                    name.setTextColor(Color.parseColor("#F44336"));
                     break;
                 case WHITE:
                     name.setTextColor(Color.WHITE);
                     name.setShadowLayer(2,1,1,Color.BLACK);
                     break;
                 case BROWN:
-                    name.setTextColor(Color.parseColor("#633905"));
+                    name.setTextColor(Color.parseColor("#795548"));
                     break;
                 case GREEN:
-                    name.setTextColor(Color.GREEN);
+                    name.setTextColor(Color.parseColor("#4CAF50"));
                     break;
                 case ORANGE:
                     name.setTextColor(Color.parseColor("#ff9000"));
