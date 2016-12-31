@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +24,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GameActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class GameActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     private GridView mGridView;
     private PlayerGridAdapter mPlayerGridAdapter;
     private Integer mSelectedActionId;
@@ -38,14 +39,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Bundle extras = getIntent().getExtras();
         mPlayers = (ArrayList<Player>) extras.get("players");
 
-        //initializeDummyPlayers();
-
         mGridView = (GridView) findViewById(R.id.players);
 
         mPlayerGridAdapter = new PlayerGridAdapter(this);
         mGridView.setAdapter(mPlayerGridAdapter);
 
         mGridView.setOnItemClickListener(this);
+        mGridView.setOnItemLongClickListener(this);
 
         initializeActionButtons();
     }
@@ -121,6 +121,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             actionView.setAlpha(0.5f);
         }
     }
+
 
     private void transferMetropolis(Player.Metropolis metropolis, int playerId) {
         mPlayers.get(playerId).takeMetropolis(metropolis);
@@ -203,6 +204,40 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         mPlayerGridAdapter.notifyDataSetChanged();
 
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        Player player = mPlayers.get(position);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        StringBuilder points = new StringBuilder();
+        points.append(Integer.toString(player.getNumSettlements()) +
+                (player.getNumSettlements() == 1 ? " settlement\n" : " settlements\n"));
+        points.append(Integer.toString(player.getNumCities()) +
+                (player.getNumCities() == 1 ? " city\n" : " cities\n"));
+        points.append(Integer.toString(player.getMetropolises().size()) +
+                (player.getMetropolises().size() == 1 ? " metropolis\n" : " metropolises\n"));
+        points.append(Integer.toString(player.getNumTimesDefender()) + " Defender of Catan " +
+                (player.getNumTimesDefender() == 1 ? "point\n" : "points\n"));
+
+        points.append(Integer.toString(player.getNumProgressCardPoints()) + " progress card victory " +
+                (player.getNumProgressCardPoints() == 1 ? "point\n" : "points\n"));
+        if (player.hasLongestRoad()) {
+            points.append("Longest Road\n");
+        }
+        if (player.hasMerchant()) {
+            points.append("Merchant\n");
+        }
+        // TODO: Largest army
+
+        builder.setMessage(points);
+
+        builder.setTitle(player.getName() + "'s Points");
+        builder.setPositiveButton("OK", null);
+
+        builder.show();
+        return true;
     }
 
     public class PlayerGridAdapter extends BaseAdapter {

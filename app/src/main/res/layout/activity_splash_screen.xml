@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_splash_screen"
+    android:layout_gravity="bottom"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#bc2d1c"
+    tools:context="com.silentstarelly.catanpointscounter.SplashScreenActivity">
+
+    <ImageView android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:layout_alignParentBottom="true"
+        android:tileMode="repeat"
+        android:src="@drawable/splash_page"
+        android:id="@+id/splash_image" />
+
+    <Button
+        android:text="Let's Settle!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/splash_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:padding="20dp"
+        android:id="@+id/enter_button"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:textSize="35sp"
+        android:textColor="#e6db64"
+        android:textStyle="normal|bold"
+        android:fontFamily="serif"
+        android:typeface="monospace"
+        android:elevation="0dp"
+        android:shadowRadius="5"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="0.5"
+        android:shadowDy="0.5" />
+
+</RelativeLayout>
