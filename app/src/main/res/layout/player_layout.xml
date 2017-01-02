@@ -39,6 +39,18 @@
             app:srcCompat="@mipmap/ic_longest_road"
             android:id="@+id/longest_road_icon"
             android:visibility="gone"/>
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:srcCompat="@mipmap/ic_largest_army"
+            android:id="@+id/largest_army_icon"
+            android:visibility="gone"/>
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:srcCompat="@mipmap/ic_longest_trade_route"
+            android:id="@+id/longest_trade_route_icon"
+            android:visibility="gone"/>
 
         <ImageView
             android:layout_width="25dp"

@@ -11,15 +11,18 @@
         <activity android:name=".GameActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".GameCreateActivity" />
-        <activity android:name=".SplashScreenActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+        <activity
+            android:name=".SplashScreenActivity"
+            android:excludeFromRecents="true"
             android:noHistory="true"
-            android:excludeFromRecents="true">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".VersionPickActivity"></activity>
     </application>
 
 </manifest>

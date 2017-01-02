@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_version_pick"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.silentstarelly.catanpointscounter.VersionPickActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true">
+        <TextView
+            android:text="Game Expansion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            android:typeface="serif"
+            android:fontFamily="serif"
+            android:textSize="26sp"
+            android:textStyle="normal|bold"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#444444" />
+        <View
+            android:layout_below="@+id/score"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/darker_gray"/>
+        <Button
+            android:text="Base Game"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/base_game"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:textStyle="normal|bold"
+            android:typeface="serif"
+            android:textSize="30sp" />
+        <Button
+            android:text="Seafarers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seafarers"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:textStyle="normal|bold"
+            android:typeface="serif"
+            android:textSize="30sp"
+            android:textColor="@color/colorAccentSecondary" />
+        <Button
+            android:text="Cities &amp; Knights"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cities_and_knights"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:textStyle="normal|bold"
+            android:typeface="serif"
+            android:textSize="30sp" />
+        <Button
+            android:text="Traders &amp; Barbarians"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/traders_and_barbarians"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:textStyle="normal|bold"
+            android:typeface="serif"
+            android:textSize="30sp"
+            android:textColor="@color/colorAccentSecondary" />
+        <Button
+            android:text="Explorers &amp; Pirates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/explorers_and_pirates"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:textStyle="normal|bold"
+            android:typeface="serif"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,13 +1,11 @@
 package com.silentstarelly.catanpointscounter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +16,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     private GridView mGridView;
     private PlayerGridAdapter mPlayerGridAdapter;
     private Integer mSelectedActionId;
+    private Integer mVersionID;
 
     private ArrayList<Player> mPlayers;
 
@@ -38,6 +33,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         Bundle extras = getIntent().getExtras();
         mPlayers = (ArrayList<Player>) extras.get("players");
+        mVersionID = (Integer) extras.get("version");
 
         mGridView = (GridView) findViewById(R.id.players);
 
@@ -52,12 +48,43 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void initializeActionButtons() {
-        int[] ids = { R.id.city_action, R.id.settlement_action, R.id.progress_card_action,
-                R.id.defender_of_catan_action, R.id.merchant_action, R.id.longest_road_action,
-                R.id.blue_metropolis_action, R.id.green_metropolis_action,
-                R.id.yellow_metropolis_action, R.id.barbarians_action };
+        ArrayList<Integer> ids = new ArrayList<>();
+        ids.add(R.id.city_action);
+        ids.add(R.id.settlement_action);
+
+        if (mVersionID != null) {
+            switch (mVersionID) {
+                case R.id.cities_and_knights:
+                    int[] citiesAndKnightsActions = {R.id.progress_card_action,
+                            R.id.defender_of_catan_action, R.id.merchant_action,
+                            R.id.longest_road_action, R.id.blue_metropolis_action,
+                            R.id.green_metropolis_action, R.id.yellow_metropolis_action,
+                            R.id.barbarians_action };
+                    for (int id : citiesAndKnightsActions) {
+                        ids.add(id);
+                    }
+                    break;
+                case R.id.seafarers:
+                    // TODO
+                    break;
+                case R.id.traders_and_barbarians:
+                    // TODO
+                    break;
+                case R.id.explorers_and_pirates:
+                    // TODO
+                    break;
+                case R.id.base_game:
+                    int[] baseActions = {R.id.largest_army_action, R.id.longest_road_action, R.id.progress_card_action};
+                    for (int id : baseActions) {
+                        ids.add(id);
+                    }
+                    break;
+            }
+        }
+
         for (int id :ids) {
             ImageView actionButton = (ImageView) findViewById(id);
+            actionButton.setVisibility(View.VISIBLE);
             actionButton.setOnClickListener(this);
         }
     }
@@ -81,9 +108,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         catherine.buildCity();
         catherine.takeLongestRoad();
         catherine.takeMerchant();
-        catherine.addProgressCardPoint();
-        catherine.addProgressCardPoint();
-        catherine.addProgressCardPoint();*/
+        catherine.addCardPoint();
+        catherine.addCardPoint();
+        catherine.addCardPoint();*/
         mPlayers.add(catherine);
 
         Player jeff = new Player("Jeff", Player.Color.ORANGE);
@@ -152,8 +179,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         mPlayers.get(playerId).takeLongestRoad();
-
     }
+    private void transferLargestArmy(int playerId) {
+        for (Player p : mPlayers) {
+            if (p.hasLargestArmy()) {
+                p.loseLargestArmy();
+            }
+        }
+        mPlayers.get(playerId).takeLargestArmy();
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Player player = mPlayers.get(position);
@@ -179,7 +214,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         player.burnCity();
                         break;
                     case R.id.progress_card_action:
-                        player.addProgressCardPoint();
+                        player.addCardPoint();
                         break;
                     case R.id.defender_of_catan_action:
                         player.addDefenderOfCatan();
@@ -189,6 +224,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case R.id.settlement_action:
                         player.buildSettlement();
+                        break;
+                    case R.id.largest_army_action:
+                        transferLargestArmy(position);
                         break;
                 }
             } catch (CatanRuleViolation e) {
@@ -211,26 +249,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Player player = mPlayers.get(position);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        StringBuilder points = new StringBuilder();
-        points.append(Integer.toString(player.getNumSettlements()) +
-                (player.getNumSettlements() == 1 ? " settlement\n" : " settlements\n"));
-        points.append(Integer.toString(player.getNumCities()) +
-                (player.getNumCities() == 1 ? " city\n" : " cities\n"));
-        points.append(Integer.toString(player.getMetropolises().size()) +
-                (player.getMetropolises().size() == 1 ? " metropolis\n" : " metropolises\n"));
-        points.append(Integer.toString(player.getNumTimesDefender()) + " Defender of Catan " +
-                (player.getNumTimesDefender() == 1 ? "point\n" : "points\n"));
 
-        points.append(Integer.toString(player.getNumProgressCardPoints()) + " progress card victory " +
-                (player.getNumProgressCardPoints() == 1 ? "point\n" : "points\n"));
-        if (player.hasLongestRoad()) {
-            points.append("Longest Road\n");
-        }
-        if (player.hasMerchant()) {
-            points.append("Merchant\n");
-        }
         // TODO: Largest army
 
+        StringBuilder points = player.getPointsBreakdownString(mVersionID);
         builder.setMessage(points);
 
         builder.setTitle(player.getName() + "'s Points");
@@ -327,6 +349,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 longestRoadIcon.setVisibility(View.VISIBLE);
             } else {
                 longestRoadIcon.setVisibility(View.GONE);
+            }
+
+            ImageView largestArmyIcon = (ImageView) playerView.findViewById(R.id.largest_army_icon);
+            if (player.hasLargestArmy()) {
+                largestArmyIcon.setVisibility(View.VISIBLE);
+            } else {
+                largestArmyIcon.setVisibility(View.GONE);
             }
 
             ImageView merchantIcon = (ImageView) playerView.findViewById(R.id.merchant_icon);

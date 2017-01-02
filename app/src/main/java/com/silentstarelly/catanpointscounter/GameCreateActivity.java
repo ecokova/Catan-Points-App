@@ -29,17 +29,24 @@ import java.util.ArrayList;
 public class GameCreateActivity extends AppCompatActivity implements View.OnClickListener {
     private GameCreateActivity.NewPlayerListAdapter mPlayerListAdapter;
     private ArrayList<Player> mPlayers;
+    private ListView mPlayersList;
+    private Player mPlayerTemplate;
+    private int mVersionID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_create);
 
+        Bundle extras = getIntent().getExtras();
+        mPlayerTemplate = (Player) extras.get("startingPlayerTemplate");
+        mVersionID = (int) extras.get("version");
+
         mPlayers = new ArrayList<>();
 
-        ListView playersList = (ListView) findViewById(R.id.players_list);
+        mPlayersList = (ListView) findViewById(R.id.players_list);
         mPlayerListAdapter = new GameCreateActivity.NewPlayerListAdapter(this);
-        playersList.setAdapter(mPlayerListAdapter);
+        mPlayersList.setAdapter(mPlayerListAdapter);
 
         Button addPlayerButton = (Button) findViewById(R.id.add_player_button);
         addPlayerButton.setOnClickListener(this);
@@ -52,12 +59,20 @@ public class GameCreateActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_player_button:
-                mPlayers.add(new Player());
+                if (mPlayerTemplate != null) {
+                    mPlayers.add(new Player(mPlayerTemplate));
+                } else {
+                    mPlayers.add(new Player());
+                }
                 mPlayerListAdapter.notifyDataSetChanged();
+
+                mPlayersList.clearFocus();
+                // TODO: Find a way to refocus on the new exittext
                 break;
             case R.id.begin_game_button:
                 Intent intent = new Intent(this, GameActivity.class);
                 intent.putExtra("players", mPlayers);
+                intent.putExtra("version", mVersionID);
                 startActivity(intent);
         }
     }
@@ -171,52 +186,15 @@ public class GameCreateActivity extends AppCompatActivity implements View.OnClic
             colorPicker.setSelection(adapter.getPosition(colorEnumToSpinnerString(player.getColor())));
             colorPicker.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                    switch(colorPicker.getSelectedItem().toString()) {
-                        case "None":
-                            mPlayers.get(playerId).setColor(Player.Color.NONE);
-                            break;
-                        case "Red":
-                            mPlayers.get(playerId).setColor(Player.Color.RED);
-                            break;
-                        case "Orange":
-                            mPlayers.get(playerId).setColor(Player.Color.ORANGE);
-                            break;
-                        case "Green":
-                            mPlayers.get(playerId).setColor(Player.Color.GREEN);
-                            break;
-                        case "Blue":
-                            mPlayers.get(playerId).setColor(Player.Color.BLUE);
-                            break;
-                        case "Brown":
-                            mPlayers.get(playerId).setColor(Player.Color.BROWN);
-                            break;
-                        case "White":
-                            mPlayers.get(playerId).setColor(Player.Color.WHITE);
-                            break;
-                    }
+                    Player.Color selectedColor = spinnerStringToColorEnum(colorPicker.getSelectedItem().toString());
+                    mPlayers.get(playerId).setColor(selectedColor);
                 }
-
 
 
                 public void onNothingSelected(AdapterView<?> parent) {
-                    // Another interface callback
+
                 }
             });
-            switch (player.getColor()) {
-                case BLUE:
-                    break;
-                case RED:
-                    break;
-                case WHITE:
-                    break;
-                case BROWN:
-                    break;
-                case GREEN:
-                    break;
-                case ORANGE:
-                    break;
-            }
-
             //TODO: Make delete clickable
             return playerView;
         }

@@ -31,6 +31,7 @@
         android:layout_alignParentStart="true">
 
         <ImageView
+            android:visibility="gone"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:clickable="true"
@@ -38,6 +39,7 @@
             android:id="@+id/city_action"
             android:layout_margin="5dp"/>
         <ImageView
+            android:visibility="gone"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:clickable="true"
@@ -45,18 +47,21 @@
             android:id="@+id/settlement_action"
             android:layout_margin="5dp"/>
         <ImageView
+            android:visibility="gone"
             android:layout_width="31dp"
             android:layout_height="31dp"
             android:clickable="true"
             app:srcCompat="@mipmap/ic_progress_card"
             android:id="@+id/progress_card_action"/>
         <ImageView
+            android:visibility="gone"
             android:layout_width="31dp"
             android:layout_height="31dp"
             android:clickable="true"
             app:srcCompat="@mipmap/ic_defender"
             android:id="@+id/defender_of_catan_action"/>
         <ImageView
+            android:visibility="gone"
             android:layout_width="18dp"
             android:layout_height="30dp"
             android:clickable="true"
@@ -64,6 +69,7 @@
             android:id="@+id/merchant_action"
             android:layout_margin="5dp"/>
         <ImageView
+            android:visibility="gone"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:clickable="true"
@@ -71,18 +77,37 @@
             android:id="@+id/longest_road_action"
             android:layout_margin="5dp"/>
         <ImageView
+            android:visibility="gone"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:clickable="true"
+            app:srcCompat="@mipmap/ic_longest_trade_route"
+            android:id="@+id/longest_trade_route_action"
+            android:layout_margin="5dp"/>
+        <ImageView
+            android:visibility="gone"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:clickable="true"
+            app:srcCompat="@mipmap/ic_largest_army"
+            android:id="@+id/largest_army_action"
+            android:layout_margin="5dp"/>
+        <ImageView
+            android:visibility="gone"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:clickable="true"
             app:srcCompat="@mipmap/ic_blue_metropolis"
             android:id="@+id/blue_metropolis_action"/>
         <ImageView
+            android:visibility="gone"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:clickable="true"
             app:srcCompat="@mipmap/ic_yellow_metropolis"
             android:id="@+id/yellow_metropolis_action"/>
         <ImageView
+            android:visibility="gone"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:clickable="true"
@@ -90,6 +115,7 @@
             android:id="@+id/green_metropolis_action"/>
 
         <ImageView
+            android:visibility="gone"
             android:layout_width="44dp"
             android:layout_height="30dp"
             android:clickable="true"

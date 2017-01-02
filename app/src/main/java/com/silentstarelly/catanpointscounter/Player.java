@@ -1,7 +1,5 @@
 package com.silentstarelly.catanpointscounter;
 
-import android.util.Log;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -18,6 +16,7 @@ public class Player implements Serializable {
     };
 
     String name;
+    Color color;
     boolean merchant;
     ArrayList<Metropolis> metropolises;
     boolean longestRoad;
@@ -26,10 +25,8 @@ public class Player implements Serializable {
 
     int numSettlements;
     int numCities;
-    int numProgressCardPoints;
+    int numCardPoints;
     int numTimesDefender;
-
-    Color color;
 
     public Player() {
         this("", Color.NONE);
@@ -41,10 +38,11 @@ public class Player implements Serializable {
         merchant = false;
         metropolises = new ArrayList<>();
         longestRoad = false;
+        largestArmy = false;
 
         numSettlements = 0;
         numCities = 0;
-        numProgressCardPoints = 0;
+        numCardPoints = 0;
         numTimesDefender = 0;
 
         color = c;
@@ -54,6 +52,19 @@ public class Player implements Serializable {
         this(playerName, Color.NONE);
     }
 
+    public Player(Player template) {
+        this(template.getName(), template.getColor());
+        this.merchant = template.hasMerchant();
+        this.metropolises.addAll(template.getMetropolises());
+        this.longestRoad = template.hasLongestRoad();
+        this.largestArmy = template.hasLargestArmy();
+
+        this.numSettlements = template.getNumSettlements();
+        this.numCities = template.getNumCities();
+        this.numCardPoints = template.getNumCardPoints();
+        this.numTimesDefender = template.getNumTimesDefender();
+
+    }
     public void setColor(Color c) {
         color = c;
     }
@@ -100,11 +111,20 @@ public class Player implements Serializable {
         }
         metropolises.remove(metropolisLost);
     }
-    public void addProgressCardPoint() {
-        numProgressCardPoints++;
+    public void addCardPoint() {
+        numCardPoints++;
     }
     public void addDefenderOfCatan() {
         numTimesDefender++;
+    }
+    public void takeLargestArmy() {
+        largestArmy = true;
+    }
+    public void loseLargestArmy() {
+        if (!largestArmy) {
+            throw new CatanRuleViolation(name + " did not have largest army to begin with.");
+        }
+        largestArmy = false;
     }
     public void takeLongestRoad() {
         longestRoad = true;
@@ -126,8 +146,9 @@ public class Player implements Serializable {
     }
 
     public int getNumVictoryPoints() {
-        return numSettlements + (2 * numCities) + numTimesDefender + numProgressCardPoints +
-                (2 * metropolises.size()) + (merchant? 1 : 0) + (longestRoad ? 2 : 0);
+        return numSettlements + (2 * numCities) + numTimesDefender + numCardPoints +
+                (2 * metropolises.size()) + (merchant? 1 : 0) + (longestRoad ? 2 : 0) +
+                (largestArmy ? 2 : 0);
     }
 
     public void setName(String n) {
@@ -137,7 +158,48 @@ public class Player implements Serializable {
         return name;
     }
 
-    // TODO: Maybe have a "get victory points reasons" or something instead of all of these?
+    public StringBuilder getPointsBreakdownString(Integer versionID) {
+        //TODO: Need to clean up overall, and add support for other expansions. Also need to consider
+        // how to handle "custom expansion" case, where a user may have combined a few different
+        // expansion packs. Maybe store version id in the player?
+        if (versionID == null) {
+            versionID = R.id.base_game;
+        }
+
+
+        StringBuilder points = new StringBuilder();
+        points.append(Integer.toString(numSettlements) +
+                (numSettlements == 1 ? " settlement\n" : " settlements\n"));
+        points.append(Integer.toString(numCities) +
+                (numCities == 1 ? " city\n" : " cities\n"));
+
+        if (versionID == R.id.cities_and_knights) {
+            points.append(Integer.toString(metropolises.size()) +
+                    (metropolises.size() == 1 ? " metropolis\n" : " metropolises\n"));
+            points.append(Integer.toString(numTimesDefender) + " Defender of Catan " +
+                    (numTimesDefender == 1 ? "point\n" : "points\n"));
+        }
+        points.append(Integer.toString(numCardPoints) + " card victory " +
+                (numCardPoints == 1 ? "point\n" : "points\n"));
+
+        if (versionID != R.id.seafarers) {
+            if (longestRoad) {
+                points.append("Longest Road\n");
+            }
+        }
+        if (versionID == R.id.base_game) {
+            if (largestArmy) {
+                points.append("Largest Army\n");
+            }
+        }
+        if (versionID == R.id.cities_and_knights) {
+            if (merchant) {
+                points.append("Merchant\n");
+            }
+        }
+        return points;
+    }
+
     public boolean hasMerchant() {
         return merchant;
     }
@@ -147,6 +209,9 @@ public class Player implements Serializable {
     public boolean hasLongestRoad() {
         return longestRoad;
     }
+    public boolean hasLargestArmy() {
+        return largestArmy;
+    }
 
     public int getNumSettlements() {
         return numSettlements;
@@ -154,8 +219,8 @@ public class Player implements Serializable {
     public int getNumCities() {
         return numCities;
     }
-    public int getNumProgressCardPoints() {
-        return numProgressCardPoints;
+    public int getNumCardPoints() {
+        return numCardPoints;
     }
     public int getNumTimesDefender() {
         return numTimesDefender;
